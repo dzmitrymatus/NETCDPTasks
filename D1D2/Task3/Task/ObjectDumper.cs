@@ -11,6 +11,14 @@ using System.Collections.Generic;
 using System.Reflection;
 
 public class ObjectDumper {
+    public static void Write(IEnumerable<object> objects) {
+        foreach(var item in objects)
+        {
+            Write(item);
+        }
+    }
+
+
     public static void Write(object o) {
         Write(o, 0);
     }
