@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Task4Library;
+using Task4Library.Concrete;
+using Task4Library.Models;
 
 namespace Task4ConsoleApplication
 {
@@ -11,17 +12,17 @@ namespace Task4ConsoleApplication
         public static void Main(string[] args)
         {
             var foldersToListen = new List<string>() { @"E:\Example" };
-            var rules = new List<FoldersListenerRule>() { new FoldersListenerRule() { FileNameRegex = ".*", DestinationFolder = @"E:\DestinationFolder" }};
-            var logger = new ConsoleFoldersListenerLogger();
+            var rules = new List<Rule>() { new Rule() { FileNameRegex = ".*", DestinationFolder = @"E:\DestinationFolder" }};
             var defaultDestinationFolder = @"E:\DefaultDestinationFolder";
 
-            var listener = new FoldersListener(foldersToListen, rules, logger, defaultDestinationFolder);
-            Console.WriteLine("Service is working... ");
+            var service = new FilesMoverService(foldersToListen, rules, defaultDestinationFolder);
+            service.Start();
 
             CancellationTokenSource source = new CancellationTokenSource();
             Console.CancelKeyPress += (o, e) =>
             {
                 source.Cancel();
+                service.Stop();
             };
             Task.Delay(TimeSpan.FromMilliseconds(-1), source.Token).Wait();
         }

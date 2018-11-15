@@ -1,6 +1,6 @@
-﻿namespace Task4Library
+﻿namespace Task4Library.Models
 {
-    public class FoldersListenerRule
+    public class Rule
     {
         public string FileNameRegex { get; set; }
         public string DestinationFolder { get; set; }
