@@ -2,5 +2,6 @@
 {
     public class ExampleClass
     {
+        public string ExampleField;
     }
 }

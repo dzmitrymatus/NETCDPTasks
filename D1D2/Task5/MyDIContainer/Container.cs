@@ -18,7 +18,7 @@ namespace MyDIContainer
         #endregion
 
         #region Constructors
-        public Container() : this(new DefaultTypeActivator())
+        public Container() : this(new EmitTypeActivator())
         {           
         }
 
@@ -69,7 +69,7 @@ namespace MyDIContainer
         {
             if (_typesDictionary.ContainsKey(type) == false)
             {
-                throw new ContainerBindingException($"Container does not have any binding for '{type.ToString()}' type! !");
+                throw new ContainerBindingException($"Container does not have any binding for '{type.ToString()}' type!");
             }
 
             if (_typesDictionary[type].IsTypeHasAttribute<ImportConstructorAttribute>())
@@ -101,7 +101,7 @@ namespace MyDIContainer
             {
                 List<object> parametersInstances = new List<object>();
 
-                foreach(var parameter in constructor.GetParameters())
+                foreach (var parameter in constructor.GetParameters())
                 {
                     var parameterInstance = CreateInstance(parameter.ParameterType);
                     if(parameterInstance == null)

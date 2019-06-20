@@ -45,7 +45,7 @@ namespace MyDIContainerUnitTests
             #endregion
 
             #region Act
-            var instance = container.CreateInstance(baseType);
+            var instance = container.CreateInstance<ILogger>();
             #endregion
 
             #region Assert
