@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Task4Library.EventArgs;
-using Task4Library.Interfaces;
+using Task4Library.FoldersListener.EventArgs;
+using Task4Library.Logger;
 
-namespace Task4Library.Concrete
+namespace Task4Library.FoldersListener.Concrete
 {
-    public class FoldersListener : IFoldersListener
+    public class DefaultFoldersListener : IFoldersListener
     {
         #region Fields
         private ILogger _logger;
-        private IList<FileSystemWatcher> _watchers;
+        private IEnumerable<FileSystemWatcher> _watchers;
         #endregion
 
         #region Events
@@ -19,10 +19,10 @@ namespace Task4Library.Concrete
         #endregion
 
         #region Constructors
-        public FoldersListener(IEnumerable<string> folders, ILogger logger)
+        public DefaultFoldersListener(IEnumerable<string> folders, ILogger logger)
         {
             _logger = logger;
-            _watchers = folders.Select(CreateWatcher).ToList();
+            _watchers = folders.Select(CreateWatcher);
         }
         #endregion
 
@@ -31,6 +31,7 @@ namespace Task4Library.Concrete
         {
             foreach(var watcher in _watchers)
             {
+                _logger.Log($"Start listen folder '{watcher.Path}'.");
                 watcher.EnableRaisingEvents = true;
             }
         }
@@ -39,6 +40,7 @@ namespace Task4Library.Concrete
         {
             foreach (var watcher in _watchers)
             {
+                _logger.Log($"Stop listen folder '{watcher.Path}'.");
                 watcher.EnableRaisingEvents = false;
             }
         }
@@ -46,7 +48,11 @@ namespace Task4Library.Concrete
         private void File_Created(object sender, FileSystemEventArgs e)
         {
             _logger.Log($"File '{e.Name}' created at {File.GetCreationTime(e.FullPath)}");
-            FileCreated?.Invoke(this, new FileCreatedEventArgs { FileName = e.Name, Path = e.FullPath, CreationDate = File.GetCreationTime(e.FullPath) });
+            FileCreated?.Invoke(this, new FileCreatedEventArgs
+            { FileName = e.Name,
+              Path = e.FullPath,
+              CreationDate = File.GetCreationTime(e.FullPath)
+            });
         }
 
         private FileSystemWatcher CreateWatcher(string path)

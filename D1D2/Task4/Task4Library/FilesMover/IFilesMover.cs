@@ -1,4 +1,4 @@
-﻿namespace Task4Library.Interfaces
+﻿namespace Task4Library.FilesMover
 {
     public interface IFilesMover
     {

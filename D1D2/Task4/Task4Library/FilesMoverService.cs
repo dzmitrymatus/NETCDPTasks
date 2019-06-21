@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Task4Library.Interfaces;
-using Task4Library.Models;
+using Task4Library.Logger;
+using Task4Library.Logger.Concrete;
+using Task4Library.FilesMover;
+using Task4Library.FilesMover.Concrete;
+using Task4Library.FoldersListener;
+using Task4Library.FoldersListener.Concrete;
 
 namespace Task4Library.Concrete
 {
@@ -13,6 +16,7 @@ namespace Task4Library.Concrete
         private ILogger _logger;
         private IFilesMover _filesMover;
         private IFoldersListener _foldersListener;
+
         private IEnumerable<Rule> _rules;
         private string _defaultDestinationFolder;
         #endregion
@@ -20,12 +24,13 @@ namespace Task4Library.Concrete
         #region Constructors
         public FilesMoverService(IEnumerable<string> folders, IEnumerable<Rule> rules, string defaultDestinationFolder)
         {
-            _logger = new ConsoleLogger();
-            _filesMover = new FilesMover(_logger);
             _rules = rules;
             _defaultDestinationFolder = defaultDestinationFolder;
-            _foldersListener = new FoldersListener(folders, _logger);
-            _foldersListener.FileCreated += _foldersListener_FileCreated;
+
+            _logger = new ConsoleLogger();
+            _filesMover = new DefaultFilesMover(_logger);
+            _foldersListener = new DefaultFoldersListener(folders, _logger);
+            _foldersListener.FileCreated += ProccessCreatedFile;
         }
         #endregion
 
@@ -42,15 +47,16 @@ namespace Task4Library.Concrete
             _logger.Log("Service has stoped...");
         }
 
-        private void _foldersListener_FileCreated(object sender, EventArgs.FileCreatedEventArgs e)
+        private void ProccessCreatedFile(object sender, FileCreatedEventArgs e)
         {
             var rule = FindRule(e.FileName);
-            _filesMover.MoveFile(e.Path, Path.Combine(rule.DestinationFolder, e.FileName));
+            //to do
+            _filesMover.MoveFile(e.Path, rule.DestinationFolder);
         }
 
         private Rule FindRule(string fileName)
         {
-            var rule = _rules.FirstOrDefault(x => Regex.IsMatch(fileName, x.FileNameRegex));
+            var rule = _rules.FirstOrDefault(x => x.FileNameRegex.IsMatch(fileName));
             if (rule != null)
             {
                 _logger.Log($"Rule for file '{fileName}' found");
@@ -63,5 +69,13 @@ namespace Task4Library.Concrete
             return rule;
         }
         #endregion
+    }
+
+    public class Rule
+    {
+        public Regex FileNameRegex { get; set; }
+        public string DestinationFolder { get; set; }
+        //public bool isAddNumber { get; set; }
+        //public bool isAddMoveDate { get; set; }
     }
 }

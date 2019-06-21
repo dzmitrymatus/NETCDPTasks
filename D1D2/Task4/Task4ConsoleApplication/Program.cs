@@ -13,7 +13,7 @@ namespace Task4ConsoleApplication
         {
             var foldersToListen = new List<string>() { @"E:\Example" };
             var rules = new List<Rule>() { new Rule() { FileNameRegex = ".*", DestinationFolder = @"E:\DestinationFolder" }};
-            var defaultDestinationFolder = @"E:\DefaultDestinationFolder";
+            var defaultDestinationFolder = @"E:\DefaultDestinationFolder";          
 
             var service = new FilesMoverService(foldersToListen, rules, defaultDestinationFolder);
             service.Start();
@@ -25,6 +25,11 @@ namespace Task4ConsoleApplication
                 service.Stop();
             };
             Task.Delay(TimeSpan.FromMilliseconds(-1), source.Token).Wait();
+        }
+
+        private static void SetUpFolders()
+        {
+
         }
     }
 }
