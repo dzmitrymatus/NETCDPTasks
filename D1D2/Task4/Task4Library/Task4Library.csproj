@@ -4,4 +4,56 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\ConsoleLogger\ConsoleLoggerResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConsoleLoggerResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\FilesMoverService\FilesMoverServiceResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FilesMoverServiceResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\FilesMover\FilesMoverResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FilesMoverResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\FoldersListener\FoldersListenerResource - Copy.Designer.cs">
+      <DependentUpon>FoldersListenerResource - Copy.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\FoldersListener\FoldersListenerResource - Copy.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FoldersListenerResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\ConsoleLogger\ConsoleLoggerResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConsoleLoggerResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FilesMoverService\FilesMoverServiceResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FilesMoverServiceResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FilesMover\FilesMoverResource.resx">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FilesMoverResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FoldersListener\FoldersListenerResource.ru-RU.resx">
+      <LastGenOutput>FoldersListenerResource.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FoldersListener\FoldersListenerResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FoldersListenerResource - Copy.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

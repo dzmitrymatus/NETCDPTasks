@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Task4Library.Logger;
+using Task4Library.Resources.FilesMover;
 
 namespace Task4Library.FilesMover.Concrete
 {
@@ -27,7 +28,7 @@ namespace Task4Library.FilesMover.Concrete
             }
 
             Directory.Move(sourceFilePath, destinationFilePath);
-            _logger.Log($"File '{Path.GetFileName(sourceFilePath)}' moved to '{Path.GetDirectoryName(destinationFilePath)}' folder");
+            _logger.Log(string.Format(FilesMoverResource.FileMovedMessage, Path.GetFileName(sourceFilePath), Path.GetDirectoryName(destinationFilePath)));
         }
         #endregion
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Task4Library.Resources.ConsoleLogger;
 
 namespace Task4Library.Logger.Concrete
 {
@@ -7,7 +8,7 @@ namespace Task4Library.Logger.Concrete
         #region Methods
         public void Log(string message)
         {
-            Console.WriteLine($"Log: {message}");
+            Console.WriteLine(ConsoleLoggerResource.LogTemplate, message);
         }
         #endregion
     }

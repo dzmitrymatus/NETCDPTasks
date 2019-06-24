@@ -7,6 +7,7 @@ using Task4Library.FilesMover;
 using Task4Library.FilesMover.Concrete;
 using Task4Library.FoldersListener;
 using Task4Library.FoldersListener.Concrete;
+using Task4Library.Resources.FilesMoverService;
 
 namespace Task4Library.Concrete
 {
@@ -32,19 +33,30 @@ namespace Task4Library.Concrete
             _foldersListener = new DefaultFoldersListener(folders, _logger);
             _foldersListener.FileCreated += ProccessCreatedFile;
         }
+
+        public FilesMoverService(IEnumerable<string> folders, IEnumerable<Rule> rules, string defaultDestinationFolder,
+             ILogger logger, IFilesMover filesMover, IFoldersListener foldersListener)
+        {
+            _rules = rules;
+            _defaultDestinationFolder = defaultDestinationFolder;
+            _logger = logger;
+            _filesMover = filesMover;
+            _foldersListener = foldersListener;
+            _foldersListener.FileCreated += ProccessCreatedFile;
+        }
         #endregion
 
         #region Methods
         public void Start()
         {
             _foldersListener.StartListen();
-            _logger.Log("Service is working...");
+            _logger.Log(FilesMoverServiceResource.StartLogMessage);
         }
 
         public void Stop()
         {
             _foldersListener.StopListen();
-            _logger.Log("Service has stoped...");
+            _logger.Log(FilesMoverServiceResource.StopLogMessage);
         }
 
         private void ProccessCreatedFile(object sender, FileCreatedEventArgs e)
@@ -59,11 +71,11 @@ namespace Task4Library.Concrete
             var rule = _rules.FirstOrDefault(x => x.FileNameRegex.IsMatch(fileName));
             if (rule != null)
             {
-                _logger.Log($"Rule for file '{fileName}' found");
+                _logger.Log(string.Format(FilesMoverServiceResource.RuleFindedLogMessage, fileName));
             }
             else
             {
-                _logger.Log($"Rule for file '{fileName}' not found");
+                _logger.Log(string.Format(FilesMoverServiceResource.RuleNotFindedLogMessage, fileName));
                 rule = new Rule() { DestinationFolder = _defaultDestinationFolder };
             }
             return rule;
