@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Task4ConsoleApplication.Configuration;
+using Task4ConsoleApplication.Configuration.Models;
 using Task4Library.Concrete;
 
 namespace Task4ConsoleApplication
@@ -12,13 +13,11 @@ namespace Task4ConsoleApplication
     {
         public static void Main(string[] args)
         {
-            var foldersToListen = new List<string>() { @"E:\Example" };
-            var rules = new List<Rule>() { new Rule() { FileNameRegex = new Regex(@".*"), DestinationFolder = @"E:\DestinationFolder" }};
-            var defaultDestinationFolder = @"E:\DefaultDestinationFolder";
+            var filesMoverConfiguration = ApplicationConfiguration.FilesMoverConfiguration;
+            SetUpCulture(filesMoverConfiguration.Culture);
+            var filesMoverServiceOptions = SetUpOptions(filesMoverConfiguration);
+            var service = new FilesMoverService(filesMoverServiceOptions);
 
-            SetUpCulture();
-
-            var service = new FilesMoverService(foldersToListen, rules, defaultDestinationFolder);
             service.Start();
 
             CancellationTokenSource source = new CancellationTokenSource();
@@ -30,15 +29,26 @@ namespace Task4ConsoleApplication
             Task.Delay(TimeSpan.FromMilliseconds(-1), source.Token).Wait();
         }
 
-        private static void SetUpFolders()
+        private static FilesMoverServiceOptions SetUpOptions(FilesMover options)
         {
-
+            return new FilesMoverServiceOptions
+            {
+                DefaultDestinationFolder = options.DefaultDestinationFolder,
+                Folders = options.Folders,
+                Rules = options.Rules.Select(x => new Task4Library.Concrete.Rule
+                {
+                    DestinationFolder = x.DestinationFolder,
+                    FileNameRegex = x.Template,
+                    isAddMoveDate = x.IsAddMoveDate,
+                    isAddNumber = x.IsAddNumber
+                })
+            };
         }
 
-        private static void SetUpCulture()
+        private static void SetUpCulture(CultureInfo cultureInfo)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
         }
     }
 }

@@ -23,22 +23,22 @@ namespace Task4Library.Concrete
         #endregion
 
         #region Constructors
-        public FilesMoverService(IEnumerable<string> folders, IEnumerable<Rule> rules, string defaultDestinationFolder)
+        public FilesMoverService(FilesMoverServiceOptions options)
         {
-            _rules = rules;
-            _defaultDestinationFolder = defaultDestinationFolder;
+            _rules = options.Rules;
+            _defaultDestinationFolder = options.DefaultDestinationFolder;
 
             _logger = new ConsoleLogger();
             _filesMover = new DefaultFilesMover(_logger);
-            _foldersListener = new DefaultFoldersListener(folders, _logger);
+            _foldersListener = new DefaultFoldersListener(options.Folders, _logger);
             _foldersListener.FileCreated += ProccessCreatedFile;
         }
 
-        public FilesMoverService(IEnumerable<string> folders, IEnumerable<Rule> rules, string defaultDestinationFolder,
+        public FilesMoverService(FilesMoverServiceOptions options,
              ILogger logger, IFilesMover filesMover, IFoldersListener foldersListener)
         {
-            _rules = rules;
-            _defaultDestinationFolder = defaultDestinationFolder;
+            _rules = options.Rules;
+            _defaultDestinationFolder = options.DefaultDestinationFolder;
             _logger = logger;
             _filesMover = filesMover;
             _foldersListener = foldersListener;
@@ -62,8 +62,7 @@ namespace Task4Library.Concrete
         private void ProccessCreatedFile(object sender, FileCreatedEventArgs e)
         {
             var rule = FindRule(e.FileName);
-            //to do
-            _filesMover.MoveFile(e.Path, rule.DestinationFolder);
+            _filesMover.MoveFile(e.Path, rule.DestinationFolder, rule.isAddNumber, rule.isAddMoveDate);
         }
 
         private Rule FindRule(string fileName)
@@ -87,7 +86,14 @@ namespace Task4Library.Concrete
     {
         public Regex FileNameRegex { get; set; }
         public string DestinationFolder { get; set; }
-        //public bool isAddNumber { get; set; }
-        //public bool isAddMoveDate { get; set; }
+        public bool isAddNumber { get; set; }
+        public bool isAddMoveDate { get; set; }
+    }
+
+    public class FilesMoverServiceOptions
+    {
+        public IEnumerable<string> Folders { get; set; }
+        public string DefaultDestinationFolder { get; set; }
+        public IEnumerable<Rule> Rules { get; set; }
     }
 }
