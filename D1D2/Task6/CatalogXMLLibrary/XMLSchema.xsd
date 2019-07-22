@@ -3,7 +3,57 @@
     targetNamespace="http://tempuri.org/XMLSchema.xsd"
     elementFormDefault="qualified"
     xmlns="http://tempuri.org/XMLSchema.xsd"
-    xmlns:mstns="http://tempuri.org/XMLSchema.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
+  <xs:element name="library">    
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="book" type="book" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="newspaper" type="newspaper" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="patent" type="patent" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:choice>
+      <xs:attribute name="dischargeTime" type="xs:dateTime" use="required"/>
+      <xs:attribute name="libraryInfo" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="book">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="1"/>
+      <xs:element name="author" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="city" type="xs:string"/>
+      <xs:element name="year" type="xs:date"/>
+      <xs:element name="pagesNumber" type="xs:int"/>
+      <xs:element name="notice" type="xs:string"/>
+      <xs:element name="isbn" type="xs:string" nillable="false"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="newspaper">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="1"/>
+      <xs:element name="city" type="xs:string"/>
+      <xs:element name="publisherName" type="xs:string"/>
+      <xs:element name="year" type="xs:gYear"/>
+      <xs:element name="pagesNumber" type="xs:int"/>
+      <xs:element name="notice" type="xs:string"/>
+      <xs:element name="issue" type="xs:int"/>
+      <xs:element name="date" type="xs:gMonthDay"/>
+      <xs:element name="issn" type="xs:string" minOccurs="1"/>      
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="patent">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="1"/>
+      <xs:element name="inventor" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="country" type="xs:string"/>
+      <xs:element name="registrationNumber" type="xs:int"/>
+      <xs:element name="applicationDate" type="xs:date"/>
+      <xs:element name="publicationDate" type="xs:date"/>
+      <xs:element name="pagesNumber" type="xs:int"/>
+      <xs:element name="notice" type="xs:string"/>     
+    </xs:sequence>
+  </xs:complexType>
+    
 </xs:schema>
