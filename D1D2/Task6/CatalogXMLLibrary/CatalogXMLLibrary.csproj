@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="XMLLibrarySource\XMLValidator\" />
+    <Compile Remove="XMLLibrarySource\XMLValidator\**" />
+    <EmbeddedResource Remove="XMLLibrarySource\XMLValidator\**" />
+    <None Remove="XMLLibrarySource\XMLValidator\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="XMLLibrary.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

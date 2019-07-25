@@ -22,7 +22,7 @@
       <xs:element name="name" type="xs:string" minOccurs="1"/>
       <xs:element name="author" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
       <xs:element name="city" type="xs:string"/>
-      <xs:element name="year" type="xs:date"/>
+      <xs:element name="year" type="xs:gYear"/>
       <xs:element name="pagesNumber" type="xs:int"/>
       <xs:element name="notice" type="xs:string"/>
       <xs:element name="isbn" type="xs:string" nillable="false"/>
