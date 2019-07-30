@@ -12,7 +12,7 @@ namespace CatalogXMLLibrary.UnitTests
         public void ReadAllItemsTest()
         {
             var stream = new FileStream("XMLLibrary.xml", FileMode.Open, FileAccess.ReadWrite);
-            var source = new XMLSource(stream);
+            var source = new XmlSource(stream);
             var items = source.Read();
             Assert.That(items.Count() == 3);
         }
