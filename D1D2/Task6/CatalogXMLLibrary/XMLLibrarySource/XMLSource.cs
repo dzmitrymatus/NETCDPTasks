@@ -4,6 +4,7 @@ using CatalogXMLLibrary.Domain.Models;
 using CatalogXMLLibrary.Domain.Interface;
 using CatalogXMLLibrary.XMLLibrarySource.Concrete;
 using CatalogXMLLibrary.XMLLibrarySource.Interfaces;
+using CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementParsers;
 
 namespace CatalogXMLLibrary.XMLLibrarySource
 {
@@ -19,7 +20,13 @@ namespace CatalogXMLLibrary.XMLLibrarySource
         public XmlSource(Stream source)
         {
             _source = source;
-            _reader = new XmlSourceReader();
+            var parsers = new List<IXmlElementParser>()
+            {
+                new BookElementParser(),
+                new NewspaperElementParser(),
+                new PatentElementParser()
+            };
+            _reader = new XmlSourceReader(parsers);
             _writer = new XmlSourceWriter();
         }
 
