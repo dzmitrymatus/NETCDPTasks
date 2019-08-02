@@ -6,6 +6,7 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Interfaces
 {
     public interface IXmlSourceReader
     {
+        ICollection<IXmlElementParser> Parsers { get; set; }
         IEnumerable<LibraryEntity> ReadEntities(Stream source);
     }
 }

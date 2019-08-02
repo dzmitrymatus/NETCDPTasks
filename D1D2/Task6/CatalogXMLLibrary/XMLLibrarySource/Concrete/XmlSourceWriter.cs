@@ -1,7 +1,8 @@
-﻿using CatalogXMLLibrary.Domain.Models;
-using CatalogXMLLibrary.XMLLibrarySource.Interfaces;
+﻿using System.IO;
 using System.Collections.Generic;
-using System.IO;
+using CatalogXMLLibrary.Domain.Models;
+using CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementWriters;
+using CatalogXMLLibrary.XMLLibrarySource.Interfaces;
 
 namespace CatalogXMLLibrary.XMLLibrarySource.Concrete
 {
@@ -11,8 +12,25 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete
         private const string _libraryTagName = "library";
         #endregion
 
-        #region Fields
-        private IEnumerable<IXmlElementWriter> _writers;
+        #region Constructors
+        public XmlSourceWriter()
+        {
+            Writers = new List<IXmlElementWriter>()
+            {
+                new BookElementWriter(),
+                new NewspaperElementWriter(),
+                new PatentElementWriter()
+            };
+        }
+
+        public XmlSourceWriter(ICollection<IXmlElementWriter> writers)
+        {
+            Writers = writers;
+        }
+        #endregion
+
+        #region Properties
+        public ICollection<IXmlElementWriter> Writers { get; set; }
         #endregion
 
         public void WriteEntities(Stream source, IEnumerable<LibraryEntity> entities)

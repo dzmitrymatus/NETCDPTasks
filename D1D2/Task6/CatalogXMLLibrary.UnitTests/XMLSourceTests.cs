@@ -8,12 +8,19 @@ namespace CatalogXMLLibrary.UnitTests
     [TestFixture]
     public class XMLSourceTests
     {
-        [Test]
-        public void ReadAllItemsTest()
+        private XmlSource _source;
+
+        [OneTimeSetUp]
+        public void Initialize()
         {
             var stream = new FileStream("XMLLibrary.xml", FileMode.Open, FileAccess.ReadWrite);
-            var source = new XmlSource(stream);
-            var items = source.Read();
+            _source = new XmlSource(stream);
+        }
+
+        [Test]
+        public void ReadAllItemsTest()
+        {            
+            var items = _source.Read();
             Assert.That(items.Count() == 3);
         }
     }

@@ -5,7 +5,7 @@ using CatalogXMLLibrary.XMLLibrarySource.Interfaces;
 
 namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementParsers
 {
-    class PatentElementParser : IXmlElementParser
+    public class PatentElementParser : IXmlElementParser
     {
         public string ElementTag => "patent";
 
