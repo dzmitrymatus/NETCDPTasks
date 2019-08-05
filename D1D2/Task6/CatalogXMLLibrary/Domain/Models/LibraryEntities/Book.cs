@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CatalogXMLLibrary.Domain.Models.LibraryEntities
+﻿namespace CatalogXMLLibrary.Domain.Models.LibraryEntities
 {
     public class Book : LibraryEntity
     {

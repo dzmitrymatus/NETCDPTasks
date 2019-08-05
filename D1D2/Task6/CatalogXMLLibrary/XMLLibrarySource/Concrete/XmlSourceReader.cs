@@ -50,9 +50,10 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete
         {
             using (var xmlReader = XmlReader.Create(source, _settings))
             {
-                xmlReader.ReadToFollowing(_libraryTagName);               
+                xmlReader.ReadToFollowing(_libraryTagName);
+                xmlReader.ReadStartElement(_libraryTagName);
 
-                while (xmlReader.Read())
+                while (xmlReader.EOF == false && xmlReader.Name != _libraryTagName)
                 {
                     if(xmlReader.NodeType == XmlNodeType.Element)
                     {

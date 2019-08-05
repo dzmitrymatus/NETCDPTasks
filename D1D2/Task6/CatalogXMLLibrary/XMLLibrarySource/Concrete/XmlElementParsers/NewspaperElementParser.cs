@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml.Linq;
 using CatalogXMLLibrary.Domain.Models;
 using CatalogXMLLibrary.Domain.Models.LibraryEntities;
@@ -16,6 +17,7 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementParsers
         private const string _issueTag = "issue";
         private const string _yearTag = "year";
         private const string _pagesNumberTag = "pagesNumber";
+        private const string _dateTag = "date";
 
         public string ElementTag => "newspaper";
 
@@ -31,7 +33,7 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementParsers
                 Issue = int.TryParse(element.Element(_issueTag)?.Value, out var i) ? i : (int?)null,
                 Year = int.TryParse(element.Element(_yearTag)?.Value, out var y) ? y : (int?)null,
                 PagesNumber = int.TryParse(element.Element(_pagesNumberTag)?.Value, out var p) ? p : (int?)null,
-                Date = // todo
+                Date = DateTime.TryParseExact(element.Element(_dateTag)?.Value, "mm-dd", null, DateTimeStyles.None, out var d) ? d : (DateTime?)null,                
             };
             return newspaper;
         }
