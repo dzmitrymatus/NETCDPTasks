@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <library libraryInfo="exampleInfo" dischargeTime="2019-07-25T09:00:00">
-  <book>
-    <name>Example book 1</name>
-    <author>Example author 1</author>
-    <city>Example city 1</city>
-    <year>2019</year>
-    <pagesNumber>30</pagesNumber>
-    <notice>Example notice 1</notice>
-    <isbn>123432423423</isbn>
-  </book>
-  <newspaper>
-    <name>Example newspaper 1</name>
-    <city>Example city 1</city>
-    <publisherName>Example publisher 1</publisherName>
-    <year>2019</year>
-    <pagesNumber>45</pagesNumber>
-    <notice>Example notice 1</notice>
-    <issue>1</issue>
-    <date>07-30</date>
-    <issn>435345345345</issn>
-  </newspaper>
-  <patent>
-    <name>Example patent 1</name>
-    <inventor>Example inventor 1</inventor>
-    <country>Example country 1</country>
-    <registrationNumber>23</registrationNumber>
-    <applicationDate>2019-07-25</applicationDate>
-    <publicationDate>2019-07-25</publicationDate>
-    <pagesNumber>56</pagesNumber>
-    <notice>Example notice 1</notice>
-  </patent>
+ <book>
+  <name>Example book 1</name>
+  <author>Example author 1</author>
+  <city>Example city 1</city>
+  <year>2019</year>
+  <pagesNumber>30</pagesNumber>
+  <notice>Example notice 1</notice>
+  <isbn>123432423423</isbn>
+ </book>
+ <newspaper>
+  <name>Example newspaper 1</name>
+  <city>Example city 1</city>
+  <publisherName>Example publisher 1</publisherName>
+  <year>2019</year>
+  <pagesNumber>45</pagesNumber>
+  <notice>Example notice 1</notice>
+  <issue>1</issue>
+  <date>07-30</date>
+  <issn>435345345345</issn>
+ </newspaper>
+ <patent>
+  <name>Example patent 1</name>
+  <inventor>Example inventor 1</inventor>
+  <country>Example country 1</country>
+  <registrationNumber>23</registrationNumber>
+  <applicationDate>2019-07-25</applicationDate>
+  <publicationDate>2019-07-25</publicationDate>
+  <pagesNumber>56</pagesNumber>
+  <notice>Example notice 1</notice>
+ </patent>
 </library>

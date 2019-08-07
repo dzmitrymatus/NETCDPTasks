@@ -24,9 +24,9 @@ namespace CatalogXMLLibrary.UnitTests
         public void WriteAllItemsDataTest()
         {
             _source.Write(XmlDataSource.XmlEntities);
-            var actual = _stream.ToString();
+            var actual = Encoding.UTF8.GetString(_stream.ToArray());
 
-            Assert.That(actual == XmlDataSource.RawXmlData);
+             Assert.That(actual == XmlDataSource.RawXmlData);
         }
     }
 }

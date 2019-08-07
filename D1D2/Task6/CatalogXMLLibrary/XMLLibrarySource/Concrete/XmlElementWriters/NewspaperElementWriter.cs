@@ -2,6 +2,7 @@
 using CatalogXMLLibrary.Domain.Models.LibraryEntities;
 using CatalogXMLLibrary.XMLLibrarySource.Interfaces;
 using System;
+using System.Xml;
 
 namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementWriters
 {
@@ -9,10 +10,9 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementWriters
     {
         public Type ElementType => typeof(Newspaper);
 
-        public void Write(LibraryEntity entity)
+        public void Write(XmlWriter xmlWriter, LibraryEntity entity)
         {
-            //todo
-            throw new NotImplementedException();
+           //todo
         }
     }
 }
