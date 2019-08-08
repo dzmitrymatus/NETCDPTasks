@@ -4,6 +4,7 @@ using CatalogXMLLibrary.Domain.Interface;
 using CatalogXMLLibrary.Domain.Models;
 using CatalogXMLLibrary.XMLLibrarySource.Interfaces;
 using CatalogXMLLibrary.XMLLibrarySource.Concrete;
+using CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementSerializers;
 
 namespace CatalogXMLLibrary.XMLLibrarySource
 {
@@ -19,8 +20,14 @@ namespace CatalogXMLLibrary.XMLLibrarySource
         public XmlSource(Stream source)
         {
             _source = source;
-            _reader = new XmlSourceReader();
-            _writer = new XmlSourceWriter();
+            var serializers = new List<IXmlElementSerializer>()
+            {
+                new BookElementSerializer(),
+                new NewspaperElementSerializer(),
+                new PatentElementSerializer()
+            };
+            _reader = new XmlSourceReader(serializers);
+            _writer = new XmlSourceWriter(serializers);
         }
 
         public XmlSource(Stream source, IXmlSourceReader reader, IXmlSourceWriter writer)

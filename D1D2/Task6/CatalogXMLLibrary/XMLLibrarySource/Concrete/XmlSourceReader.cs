@@ -2,11 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Xml;
-using System.Xml.Linq;
 using System.Collections.Generic;
 using CatalogXMLLibrary.Domain.Models;
 using CatalogXMLLibrary.XMLLibrarySource.Interfaces;
-using CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementParsers;
 
 namespace CatalogXMLLibrary.XMLLibrarySource.Concrete
 {
@@ -27,22 +25,16 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete
         #region Constructors
         public XmlSourceReader()
         {
-            Parsers = new List<IXmlElementParser>()
-            {
-                new BookElementParser(),
-                new NewspaperElementParser(),
-                new PatentElementParser()
-            };
         }
 
-        public XmlSourceReader(ICollection<IXmlElementParser> parsers)
+        public XmlSourceReader(ICollection<IXmlElementSerializer> serializers)
         {
-            Parsers = parsers;
+            Serializers = serializers;
         }
         #endregion
 
         #region Properties
-        public ICollection<IXmlElementParser> Parsers { get; set; }
+        public ICollection<IXmlElementSerializer> Serializers { get; set; }
         #endregion
 
         #region Public methods
@@ -57,7 +49,9 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete
                 {
                     if(xmlReader.NodeType == XmlNodeType.Element)
                     {
-                        yield return ParseEntity(xmlReader);
+                        var elementTag = xmlReader.LocalName;
+                        var element = xmlReader.ReadOuterXml();
+                        yield return DeserializeEntity(element, elementTag);
                     }
                 }
             }
@@ -65,12 +59,11 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete
         #endregion
 
         #region Private methods
-        private LibraryEntity ParseEntity(XmlReader xmlReader)
+        private LibraryEntity DeserializeEntity(string element, string elementTag)
         {
-            var node = XNode.ReadFrom(xmlReader) as XElement;
-            var parser = Parsers.FirstOrDefault(x => x.ElementTag == node.Name);
-            if (parser == null) throw new Exception($"Unexpected element: '{node.Name}'. Reader doesn't have parser for this element!");
-            return parser.Parse(node);
+            var serializer = Serializers.FirstOrDefault(x => x.ElementTag == elementTag);
+            if (serializer == null) throw new Exception($"Unexpected element: '{elementTag}'. Reader doesn't have serializer for this element!");
+            return serializer.Deserialize(element);
         }
         #endregion
     }

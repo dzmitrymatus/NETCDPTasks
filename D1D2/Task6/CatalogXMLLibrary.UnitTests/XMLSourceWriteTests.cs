@@ -25,8 +25,8 @@ namespace CatalogXMLLibrary.UnitTests
         {
             _source.Write(XmlDataSource.XmlEntities);
             var actual = Encoding.UTF8.GetString(_stream.ToArray());
-
-             Assert.That(actual == XmlDataSource.RawXmlData);
+       
+            Assert.AreEqual(XmlDataSource.RawXmlData, actual);
         }
     }
 }

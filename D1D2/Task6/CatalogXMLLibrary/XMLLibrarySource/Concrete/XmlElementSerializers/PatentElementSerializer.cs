@@ -5,9 +5,9 @@ using CatalogXMLLibrary.Domain.Models;
 using CatalogXMLLibrary.Domain.Models.LibraryEntities;
 using CatalogXMLLibrary.XMLLibrarySource.Interfaces;
 
-namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementParsers
+namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementSerializers
 {
-    public class PatentElementParser : IXmlElementParser
+    public class PatentElementSerializer : IXmlElementSerializer
     {
         private const string _nameTag = "name";
         private const string _inventorTag = "inventor";
@@ -19,9 +19,28 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementParsers
         private const string _noticeTag = "notice";
 
         public string ElementTag => "patent";
+        public Type ElementType => typeof(Patent);
 
-        public LibraryEntity Parse(XElement element)
+        public string Serialize(LibraryEntity entity)
         {
+            var patent = entity as Patent;
+            if (patent == null) throw new NullReferenceException();
+
+            var patentXml = new XElement(ElementTag,
+                new XElement(_nameTag, patent.Name),
+                new XElement(_inventorTag, patent.Inventor),
+                new XElement(_countryTag, patent.Country),
+                new XElement(_registrationNumberTag, patent.RegistrationNumber?.ToString()),
+                new XElement(_applicationDateTag, patent.ApplicationDate?.ToString()),
+                new XElement(_publicationDateTag, patent.PublicationDate?.ToString()),
+                new XElement(_pagesNumberTag, patent.PagesNumber?.ToString()),
+                new XElement(_noticeTag, patent.Notice));
+            return patentXml.ToString();
+        }
+
+        public LibraryEntity Deserialize(string elementXml)
+        {
+            var element = XElement.Parse(elementXml);
             var patent = new Patent()
             {
                 Name = element.Element(_nameTag)?.Value,

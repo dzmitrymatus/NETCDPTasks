@@ -8,8 +8,8 @@ namespace CatalogXMLLibrary.UnitTests.TestData
     public class XmlDataSource
     {
         public static string RawXmlData =>
- @"<?xml version=""1.0"" encoding=""utf-8"" ?>
-<library libraryInfo=""exampleInfo"" dischargeTime=""2019-07-25T09:00:00"">
+ @"<?xml version=""1.0"" encoding=""utf-8""?>
+<library>
   <book>
     <name>Example book 1</name>
     <author>Example author 1</author>

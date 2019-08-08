@@ -1,12 +1,12 @@
-﻿using CatalogXMLLibrary.Domain.Models;
+﻿using System.IO;
 using System.Collections.Generic;
-using System.IO;
+using CatalogXMLLibrary.Domain.Models;
 
 namespace CatalogXMLLibrary.XMLLibrarySource.Interfaces
 {
     public interface IXmlSourceReader
     {
-        ICollection<IXmlElementParser> Parsers { get; set; }
+        ICollection<IXmlElementSerializer> Serializers { get; set; }
         IEnumerable<LibraryEntity> ReadEntities(Stream source);
     }
 }
