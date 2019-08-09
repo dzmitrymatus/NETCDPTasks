@@ -31,10 +31,11 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementSerializers
                 new XElement(_inventorTag, patent.Inventor),
                 new XElement(_countryTag, patent.Country),
                 new XElement(_registrationNumberTag, patent.RegistrationNumber?.ToString()),
-                new XElement(_applicationDateTag, patent.ApplicationDate?.ToString()),
-                new XElement(_publicationDateTag, patent.PublicationDate?.ToString()),
+                new XElement(_applicationDateTag, patent.ApplicationDate?.ToString("yyyy-mm-dd")),
+                new XElement(_publicationDateTag, patent.PublicationDate?.ToString("yyyy-mm-dd")),
                 new XElement(_pagesNumberTag, patent.PagesNumber?.ToString()),
-                new XElement(_noticeTag, patent.Notice));
+                new XElement(_noticeTag, patent.Notice),
+                new XText($"{Environment.NewLine} "));
             return patentXml.ToString();
         }
 

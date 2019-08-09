@@ -9,15 +9,15 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementSerializers
 {
     public class NewspaperElementSerializer : IXmlElementSerializer
     {
-        private const string _publisherNameTag = "publisherName";
+        private const string _nameTag = "name";       
         private const string _cityTag = "city";
-        private const string _nameTag = "name";
-        private const string _noticeTag = "notice";
-        private const string _issnTag = "issn";
-        private const string _issueTag = "issue";
+        private const string _publisherNameTag = "publisherName";
         private const string _yearTag = "year";
         private const string _pagesNumberTag = "pagesNumber";
+        private const string _noticeTag = "notice";
+        private const string _issueTag = "issue";
         private const string _dateTag = "date";
+        private const string _issnTag = "issn";
 
         public string ElementTag => "newspaper";
         public Type ElementType => typeof(Newspaper);
@@ -28,15 +28,16 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementSerializers
             if (newspaper == null) throw new NullReferenceException();
 
             var newspaperXml = new XElement(ElementTag,
-                new XElement(_publisherNameTag, newspaper.PublisherName),
-                new XElement(_cityTag, newspaper.City),
                 new XElement(_nameTag, newspaper.Name),
-                new XElement(_noticeTag, newspaper.Notice),
-                new XElement(_issnTag, newspaper.ISSN),
-                new XElement(_issueTag, newspaper.Issue?.ToString()),
+                new XElement(_cityTag, newspaper.City),
+                new XElement(_publisherNameTag, newspaper.PublisherName),
                 new XElement(_yearTag, newspaper.Year?.ToString()),
                 new XElement(_pagesNumberTag, newspaper.PagesNumber?.ToString()),
-                new XElement(_dateTag, newspaper.Date?.ToString()));
+                new XElement(_noticeTag, newspaper.Notice),
+                new XElement(_issueTag, newspaper.Issue?.ToString()),
+                new XElement(_dateTag, newspaper.Date?.ToString("mm-dd")),
+                new XElement(_issnTag, newspaper.ISSN),
+                new XText($"{Environment.NewLine} "));
             return newspaperXml.ToString();
         }
 

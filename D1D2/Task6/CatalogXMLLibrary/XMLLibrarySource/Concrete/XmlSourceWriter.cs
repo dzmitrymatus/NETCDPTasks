@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using CatalogXMLLibrary.Domain.Models;
 using CatalogXMLLibrary.XMLLibrarySource.Interfaces;
+using System.Text;
 
 namespace CatalogXMLLibrary.XMLLibrarySource.Concrete
 {
@@ -40,8 +41,9 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete
                 foreach(var entity in entities)
                 {
                     var xmlEntity = SerializeEntity(xmlWriter, entity);
-                    xmlWriter.WriteString(xmlEntity);
+                    xmlWriter.WriteRaw($"{Environment.NewLine} {xmlEntity}");
                 }
+                xmlWriter.WriteRaw($"{Environment.NewLine}");
                 xmlWriter.WriteEndElement();
             }
         }

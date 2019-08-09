@@ -8,13 +8,13 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementSerializers
 {
     public class BookElementSerializer : IXmlElementSerializer
     {
+        private const string _nameTag = "name";
         private const string _authorTag = "author";
         private const string _cityTag = "city";
-        private const string _nameTag = "name";
+        private const string _yearTag = "year";
+        private const string _pagesNumberTag = "pagesNumber";
         private const string _noticeTag = "notice";
         private const string _isbnTag = "isbn";
-        private const string _pagesNumberTag = "pagesNumber";
-        private const string _yearTag = "year";
 
         public string ElementTag => "book";
         public Type ElementType => typeof(Book);
@@ -25,13 +25,15 @@ namespace CatalogXMLLibrary.XMLLibrarySource.Concrete.XmlElementSerializers
             if (book == null) throw new NullReferenceException();
 
             var bookXml = new XElement(ElementTag,
+                new XElement(_nameTag, book.Name),
                 new XElement(_authorTag, book.Author),
                 new XElement(_cityTag, book.City),
-                new XElement(_nameTag, book.Name),
+                new XElement(_yearTag, book.Year?.ToString()),
+                new XElement(_pagesNumberTag, book.PagesNumber?.ToString()),
                 new XElement(_noticeTag, book.Notice),
                 new XElement(_isbnTag, book.ISBN),
-                new XElement(_pagesNumberTag, book.PagesNumber?.ToString()),
-                new XElement(_yearTag, book.Year?.ToString()));
+                new XText($"{Environment.NewLine} "));
+
             return bookXml.ToString(SaveOptions.None);            
         }
 
