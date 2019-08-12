@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using CatalogXMLLibrary.UnitTests.TestData;
 using CatalogXMLLibrary.XMLLibrarySource;
@@ -24,7 +22,9 @@ namespace CatalogXMLLibrary.UnitTests
         public void WriteAllItemsDataTest()
         {
             _source.Write(XmlDataSource.XmlEntities);
-            var actual = Encoding.UTF8.GetString(_stream.ToArray());
+            _stream.Position = 0;
+            TextReader reader = new StreamReader(_stream);
+            var actual = reader.ReadToEnd();
        
             Assert.AreEqual(XmlDataSource.RawXmlData, actual);
         }
