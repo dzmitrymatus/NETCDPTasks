@@ -140,5 +140,9 @@
     <None Include="Scripts\Task2Scripts\2.1\Script2.sql" />
     <None Include="Scripts\Task2Scripts\2.1\Script3.sql" />
     <None Include="Scripts\Task2Scripts\2.2\Script1.sql" />
+    <None Include="Scripts\Task2Scripts\2.2\Script2.sql" />
+    <None Include="Scripts\Task2Scripts\2.2\Script3.sql" />
+    <None Include="Scripts\Task2Scripts\2.2\Script4.sql" />
+    <None Include="Scripts\Task2Scripts\2.2\Script5.sql" />
   </ItemGroup>
 </Project>
